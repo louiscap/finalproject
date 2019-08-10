@@ -74,8 +74,12 @@ BUSH_IDS = {
     1, 2, 5, 6, 7
 }
 
-COIN_IDS = {
+COINS = {
     1, 2, 3
+}
+
+MUSHROOMS = {
+    22, 27, 32, 37, 42
 }
 
 CRATES = {

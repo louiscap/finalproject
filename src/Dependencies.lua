@@ -71,8 +71,11 @@ gTextures = {
     ['bushes'] = love.graphics.newImage('graphics/bushes_and_cacti.png'),
     ['jump-blocks'] = love.graphics.newImage('graphics/jump_blocks.png'),
     ['gems'] = love.graphics.newImage('graphics/gems.png'),
+    ['coins'] = love.graphics.newImage('graphics/coins_and_bombs.png'),
+    ['mushrooms'] = love.graphics.newImage('graphics/mushrooms.png'),
     ['backgrounds'] = love.graphics.newImage('graphics/backgrounds.png'),
     ['green-alien'] = love.graphics.newImage('graphics/green_alien.png'),
+    ['blue-alien'] = love.graphics.newImage('graphics/blue_alien.png'),
     ['creatures'] = love.graphics.newImage('graphics/creatures.png'),
     ['ladders'] = love.graphics.newImage('graphics/ladders_and_signs.png'),
 }
@@ -85,8 +88,11 @@ gFrames = {
     ['bushes'] = GenerateQuads(gTextures['bushes'], 16, 16),
     ['jump-blocks'] = GenerateQuads(gTextures['jump-blocks'], 16, 16),
     ['gems'] = GenerateQuads(gTextures['gems'], 16, 16),
+    ['coins'] = GenerateQuads(gTextures['coins'], 16, 16),
+    ['mushrooms'] = GenerateQuads(gTextures['mushrooms'], 16, 16),
     ['backgrounds'] = GenerateQuads(gTextures['backgrounds'], 256, 128),
     ['green-alien'] = GenerateQuads(gTextures['green-alien'], 16, 20),
+    ['blue-alien'] = GenerateQuads(gTextures['blue-alien'], 16, 20),
     ['creatures'] = GenerateQuads(gTextures['creatures'], 16, 16),
     ['ladders'] = GenerateQuads(gTextures['ladders'], 16, 16)
 }

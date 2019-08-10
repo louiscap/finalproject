@@ -30,7 +30,7 @@ function LevelMaker.generate(width, height)
         --local tileID = TILE_ID_EMPTY
         -- lay out the empty space
         for x = 1, width do
-            if y < 8  or x > 9 and x < 14 then
+            if y < 8  or (x > 9 and x < 14 ) or (x > 22 and x < 28) then
                 table.insert(tiles[y], Tile(x, y, TILE_ID_EMPTY, nil, tileset, topperset))
             else
                 table.insert(tiles[y], Tile(x, y, TILE_ID_GROUND, y == 8 and topper or nil, tileset, topperset))
@@ -50,9 +50,13 @@ function LevelMaker.generate(width, height)
         local y = 3
         tiles[3][x] = Tile(x, y, TILE_ID_GROUND, nil, 53, 104)
     end
+    for x = 16, 17 do
+        local y = 5
+        tiles[5][x] = Tile(x, y, TILE_ID_GROUND, nil, 53, 104)
+    end
 
     -- table of xy coords to put jump blocks
-    local jb = {{6,2}, {7,2}, {15,5}, {18,5}}
+    local jb = {{6,2}, {7,2}, {15,5}}
     for i, xy in ipairs(jb) do
         table.insert(objects,
             -- jump block
@@ -74,29 +78,29 @@ function LevelMaker.generate(width, height)
                         -- chance to spawn gem, not guaranteed
                         if math.random(2) == 1 then
                             -- maintain reference so we can set it to nil
-                            local gem = GameObject {
-                                texture = 'gems',
+                            local coin = GameObject {
+                                texture = 'coins',
                                 x = (xy[1] - 1) * TILE_SIZE,
                                 y = (xy[2] - 1) * TILE_SIZE - 4,
                                 width = 16,
                                 height = 16,
-                                frame = math.random(#GEMS),
+                                frame = math.random(#COINS),
                                 collidable = true,
                                 consumable = true,
                                 solid = false,
-                                -- gem has its own function to add to the player's score
+                                -- coin has its own function to add to the player's score
                                 onConsume = function(player, object)
                                     gSounds['pickup']:play()
                                     player.score = player.score + 100
                                 end
                             }
-                            -- make the gem move up from the block and play a sound
+                            -- make the coin move up from the block and play a sound
                             Timer.tween(0.1, {
-                                [gem] = {y = (xy[2] - 2) * TILE_SIZE}
+                                [coin] = {y = (xy[2] - 2) * TILE_SIZE}
                             })
                             gSounds['powerup-reveal']:play()
 
-                            table.insert(objects, gem)
+                            table.insert(objects, coin)
                         end
                         obj.hit = true
                     end
@@ -106,74 +110,71 @@ function LevelMaker.generate(width, height)
         )
     end
 
-
---[[ lc
-            -- chance to spawn a block
-            if math.random(10) == 1 then
-                table.insert(objects,
-
-                    -- jump block
-                    GameObject {
-                        texture = 'jump-blocks',
-                        x = (x - 1) * TILE_SIZE,
-                        y = (blockHeight - 1) * TILE_SIZE,
-                        width = 16,
-                        height = 16,
-
-                        -- make it a random variant
-                        frame = math.random(#JUMP_BLOCKS),
-                        collidable = true,
-                        hit = false,
-                        solid = true,
-
-                        -- collision function takes itself
-                        onCollide = function(obj)
-
-                            -- spawn a gem if we haven't already hit the block
-                            if not obj.hit then
-
-                                -- chance to spawn gem, not guaranteed
-                                if math.random(5) == 1 then
-
-                                    -- maintain reference so we can set it to nil
-                                    local gem = GameObject {
-                                        texture = 'gems',
-                                        x = (x - 1) * TILE_SIZE,
-                                        y = (blockHeight - 1) * TILE_SIZE - 4,
-                                        width = 16,
-                                        height = 16,
-                                        frame = math.random(#GEMS),
-                                        collidable = true,
-                                        consumable = true,
-                                        solid = false,
-
-                                        -- gem has its own function to add to the player's score
-                                        onConsume = function(player, object)
-                                            gSounds['pickup']:play()
-                                            player.score = player.score + 100
-                                        end
-                                    }
-
-                                    -- make the gem move up from the block and play a sound
-                                    Timer.tween(0.1, {
-                                        [gem] = {y = (blockHeight - 2) * TILE_SIZE}
-                                    })
-                                    gSounds['powerup-reveal']:play()
-
-                                    table.insert(objects, gem)
+    -- xy coords to put jump block with mushroom
+    local mr = {{18,5}}
+    for i, xy in ipairs(mr) do
+        table.insert(objects,
+            -- jump block
+            GameObject {
+                texture = 'jump-blocks',
+                x = (xy[1] - 1) * TILE_SIZE,
+                y = (xy[2] - 1) * TILE_SIZE,
+                width = 16,
+                height = 16,
+                -- make it a preset variant
+                frame = 25,
+                collidable = true,
+                hit = false,
+                solid = true,
+                -- collision function takes itself
+                onCollide = function(obj)
+                    -- spawn a gem if we haven't already hit the block
+                    if not obj.hit then
+                        -- spawn mushroom,  guaranteed
+                        if true then
+                            -- maintain reference so we can set it to nil
+                            local mushroom = GameObject {
+                                texture = 'mushrooms',
+                                x = (xy[1] - 1) * TILE_SIZE,
+                                y = (xy[2] - 1) * TILE_SIZE - 4,
+                                width = 16,
+                                height = 16,
+                                frame = 23,
+                                collidable = true,
+                                consumable = true,
+                                solid = false,
+                                -- mushroom gives special powers
+                                onConsume = function(player, object)
+                                    gSounds['pickup']:play()
+                                    player.score = player.score + 500
+                                    -- change texture, increase speed and jump
+                                    player.texture = "blue-alien"
+                                    PLAYER_WALK_SPEED = PLAYER_WALK_SPEED * 2
+                                    PLAYER_JUMP_VELOCITY = PLAYER_JUMP_VELOCITY * 1.5
+                                    -- revert back to normal
+                                    Timer.after(5, function ()
+                                        player.texture = 'green-alien'
+                                        PLAYER_WALK_SPEED = PLAYER_WALK_SPEED / 2
+                                        PLAYER_JUMP_VELOCITY = PLAYER_JUMP_VELOCITY / 1.5
+                                        end)
                                 end
+                            }
+                            -- make the gem move up from the block and play a sound
+                            Timer.tween(0.1, {
+                                [mushroom] = {y = (xy[2] - 2) * TILE_SIZE}
+                            })
+                            gSounds['powerup-reveal']:play()
 
-                                obj.hit = true
-                            end
-
-                            gSounds['empty-block']:play()
+                            table.insert(objects, mushroom)
                         end
-                    }
-                )
-            end
-        end
+                        obj.hit = true
+                    end
+                    gSounds['empty-block']:play()
+                end
+            }
+        )
     end
-    ]]--
+
 
     local map = TileMap(width, height)
     map.tiles = tiles

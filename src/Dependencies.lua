@@ -73,27 +73,29 @@ gTextures = {
     ['gems'] = love.graphics.newImage('graphics/gems.png'),
     ['backgrounds'] = love.graphics.newImage('graphics/backgrounds.png'),
     ['green-alien'] = love.graphics.newImage('graphics/green_alien.png'),
-    ['creatures'] = love.graphics.newImage('graphics/creatures.png')
+    ['creatures'] = love.graphics.newImage('graphics/creatures.png'),
+    ['ladders'] = love.graphics.newImage('graphics/ladders_and_signs.png'),
 }
 
 gFrames = {
     ['tiles'] = GenerateQuads(gTextures['tiles'], TILE_SIZE, TILE_SIZE),
-    
+
     ['toppers'] = GenerateQuads(gTextures['toppers'], TILE_SIZE, TILE_SIZE),
-    
+
     ['bushes'] = GenerateQuads(gTextures['bushes'], 16, 16),
     ['jump-blocks'] = GenerateQuads(gTextures['jump-blocks'], 16, 16),
     ['gems'] = GenerateQuads(gTextures['gems'], 16, 16),
     ['backgrounds'] = GenerateQuads(gTextures['backgrounds'], 256, 128),
     ['green-alien'] = GenerateQuads(gTextures['green-alien'], 16, 20),
-    ['creatures'] = GenerateQuads(gTextures['creatures'], 16, 16)
+    ['creatures'] = GenerateQuads(gTextures['creatures'], 16, 16),
+    ['ladders'] = GenerateQuads(gTextures['ladders'], 16, 16)
 }
 
 -- these need to be added after gFrames is initialized because they refer to gFrames from within
-gFrames['tilesets'] = GenerateTileSets(gFrames['tiles'], 
+gFrames['tilesets'] = GenerateTileSets(gFrames['tiles'],
     TILE_SETS_WIDE, TILE_SETS_TALL, TILE_SET_WIDTH, TILE_SET_HEIGHT)
 
-gFrames['toppersets'] = GenerateTileSets(gFrames['toppers'], 
+gFrames['toppersets'] = GenerateTileSets(gFrames['toppers'],
     TOPPER_SETS_WIDE, TOPPER_SETS_TALL, TILE_SET_WIDTH, TILE_SET_HEIGHT)
 
 gFonts = {

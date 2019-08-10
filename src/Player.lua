@@ -32,7 +32,7 @@ function Player:checkLeftCollisions(dt)
     if (tileTopLeft and tileBottomLeft) and (tileTopLeft:collidable() or tileBottomLeft:collidable()) then
         self.x = (tileTopLeft.x - 1) * TILE_SIZE + tileTopLeft.width - 1
     else
-        
+
         -- allow us to walk atop solid objects even if we collide with them
         self.y = self.y - 1
         local collidedObjects = self:checkObjectCollisions()
@@ -54,7 +54,7 @@ function Player:checkRightCollisions(dt)
     if (tileTopRight and tileBottomRight) and (tileTopRight:collidable() or tileBottomRight:collidable()) then
         self.x = (tileTopRight.x - 1) * TILE_SIZE - self.width
     else
-        
+
         -- allow us to walk atop solid objects even if we collide with them
         self.y = self.y - 1
         local collidedObjects = self:checkObjectCollisions()
@@ -82,4 +82,16 @@ function Player:checkObjectCollisions()
     end
 
     return collidedObjects
+end
+
+function Player:checkLadderCollisions()
+    local collidedLadders = {}
+    for k, object in ipairs(self.level.objects) do
+        if object.texture == 'ladders' and object:collides(self) then
+            table.insert(collidedLadders, object)
+            print('inserted table')
+            print(object)
+        end
+    end
+    return collidedLadders
 end

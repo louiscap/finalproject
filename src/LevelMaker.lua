@@ -56,6 +56,24 @@ function LevelMaker.generate(width, height)
         end
     end
 
+    -- ladder
+    local x = 3
+    for y = 2,7 do
+        table.insert(objects,
+            GameObject {
+                texture = 'ladders',
+                x = (x - 1) * TILE_SIZE,
+                y = (y - 1) * TILE_SIZE,
+                width = 16,
+                height = 16,
+                -- make it a preset variant
+                frame = 8,
+                collidable = true,
+                hit = false,
+                solid = false,
+            }
+        )
+    end
     -- table of xy coords to put jump blocks
     local jb = {{6,2}, {7,2}, {15,5}}
     for i, xy in ipairs(jb) do

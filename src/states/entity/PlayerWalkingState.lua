@@ -60,4 +60,12 @@ function PlayerWalkingState:update(dt)
     if love.keyboard.wasPressed('space') then
         self.player:changeState('jump')
     end
+
+    if love.keyboard.wasPressed('up') or love.keyboard.wasPressed('down') then
+        -- check if collided with ladder
+        if self.player:checkLadderCollisions() then
+            self.player:changeState('climbing')
+        end
+    end
+
 end

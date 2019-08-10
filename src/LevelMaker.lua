@@ -47,17 +47,17 @@ function LevelMaker.generate(width, height)
         end
     end
 
-    --platform_height = 3
+    --platform_height = 4
     local pf = {{10,12}, {36,42}}
     for i, range in ipairs(pf) do
-        local y = 3
+        local y = 4
         for x = range[1], range[2] do
             tiles[y][x] = Tile(x, y, TILE_ID_GROUND, nil, 53, 104)
         end
     end
 
     -- ladder
-    local x = 3
+    local x = 37
     for y = 2,7 do
         table.insert(objects,
             GameObject {

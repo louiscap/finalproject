@@ -93,5 +93,7 @@ function Player:checkLadderCollisions()
             print(object)
         end
     end
-    return collidedLadders
+    if #collidedLadders > 0 then
+        return collidedLadders
+    end
 end

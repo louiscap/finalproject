@@ -19,8 +19,8 @@ function LevelMaker.generate(width, height)
 
     -- whether we should draw our tiles with toppers
     local topper = true
-    local tileset = 16 --lc math.random(20)
-    local topperset = 15 --lc math.random(20)
+    local tileset = 16
+    local topperset = 15
     -- insert blank tables into tiles for later access
     for y = 1, height do
         table.insert(tiles, {})
@@ -30,29 +30,30 @@ function LevelMaker.generate(width, height)
         --local tileID = TILE_ID_EMPTY
         -- lay out the empty space
         for x = 1, width do
-            if y < 8  or (x > 9 and x < 14 ) or (x > 22 and x < 28) then
+            if y < 8  or (x > 9 and x < 14 ) or (x > 23 and x < 29) then
                 table.insert(tiles[y], Tile(x, y, TILE_ID_EMPTY, nil, tileset, topperset))
             else
                 table.insert(tiles[y], Tile(x, y, TILE_ID_GROUND, y == 8 and topper or nil, tileset, topperset))
             end
         end
     end
-    -- platforms at various places
+    -- platforms at various places and heights
     --platform_height = 5
-    for x = 4, 8 do
+    local pf = {{4,8}, {16,17}}
+    for i, range in ipairs(pf) do
         local y = 5
-        tiles[5][x] = Tile(x, y, TILE_ID_GROUND, nil, 53, 104)
-        print_r(tiles[5][x])
+        for x = range[1], range[2] do
+            tiles[y][x] = Tile(x, y, TILE_ID_GROUND, nil, 53, 104)
+        end
     end
 
     --platform_height = 3
-    for x = 10, 12 do
+    local pf = {{10,12}, {36,42}}
+    for i, range in ipairs(pf) do
         local y = 3
-        tiles[3][x] = Tile(x, y, TILE_ID_GROUND, nil, 53, 104)
-    end
-    for x = 16, 17 do
-        local y = 5
-        tiles[5][x] = Tile(x, y, TILE_ID_GROUND, nil, 53, 104)
+        for x = range[1], range[2] do
+            tiles[y][x] = Tile(x, y, TILE_ID_GROUND, nil, 53, 104)
+        end
     end
 
     -- table of xy coords to put jump blocks
@@ -149,13 +150,13 @@ function LevelMaker.generate(width, height)
                                     player.score = player.score + 500
                                     -- change texture, increase speed and jump
                                     player.texture = "blue-alien"
-                                    PLAYER_WALK_SPEED = PLAYER_WALK_SPEED * 2
-                                    PLAYER_JUMP_VELOCITY = PLAYER_JUMP_VELOCITY * 1.5
+                                    PLAYER_WALK_SPEED = PLAYER_WALK_SPEED * 1.5
+                                    PLAYER_JUMP_VELOCITY = PLAYER_JUMP_VELOCITY * 1.3
                                     -- revert back to normal
                                     Timer.after(5, function ()
                                         player.texture = 'green-alien'
-                                        PLAYER_WALK_SPEED = PLAYER_WALK_SPEED / 2
-                                        PLAYER_JUMP_VELOCITY = PLAYER_JUMP_VELOCITY / 1.5
+                                        PLAYER_WALK_SPEED = PLAYER_WALK_SPEED / 1.5
+                                        PLAYER_JUMP_VELOCITY = PLAYER_JUMP_VELOCITY / 1.3
                                         end)
                                 end
                             }

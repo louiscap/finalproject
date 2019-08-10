@@ -113,7 +113,13 @@ function LevelMaker.generate(width, height)
         height = 16,
         frame = 19,
         collidable = true,
-        solid = false }
+        consumable = false,
+        solid = false,
+        onCollide= function()
+            gSounds['music']:pause()
+            gSounds['victory']:play()
+        end
+        }
     table.insert(objects, pole3)
 
     table.insert(objects, GameObject {
@@ -127,7 +133,7 @@ function LevelMaker.generate(width, height)
         )
 
     -- table of xy coords to put jump blocks
-    local jb = {{6,2}, {7,2}, {15,5}}
+    local jb = {{6,2}, {7,2}, {15,5}, {33,5}}
     for i, xy in ipairs(jb) do
         table.insert(objects,
             -- jump block
@@ -223,7 +229,7 @@ function LevelMaker.generate(width, height)
                                     PLAYER_WALK_SPEED = PLAYER_WALK_SPEED * 1.5
                                     PLAYER_JUMP_VELOCITY = PLAYER_JUMP_VELOCITY * 1.3
                                     -- revert back to normal
-                                    Timer.after(5, function ()
+                                    Timer.after(4, function ()
                                         player.texture = 'green-alien'
                                         PLAYER_WALK_SPEED = PLAYER_WALK_SPEED / 1.5
                                         PLAYER_JUMP_VELOCITY = PLAYER_JUMP_VELOCITY / 1.3

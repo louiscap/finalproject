@@ -68,4 +68,9 @@ function PlayerWalkingState:update(dt)
         end
     end
 
+    if self.player.x > 50 * 16 then
+        gSounds['music']:pause()
+        gSounds['victory']:play()
+    end
+
 end

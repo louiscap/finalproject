@@ -48,7 +48,7 @@ function LevelMaker.generate(width, height)
     end
 
     --platform_height = 4
-    local pf = {{10,12}, {36,42}}
+    local pf = {{10,12}, {36,41}}
     for i, range in ipairs(pf) do
         local y = 4
         for x = range[1], range[2] do
@@ -74,6 +74,58 @@ function LevelMaker.generate(width, height)
             }
         )
     end
+
+    -- wall
+    for x = 44,46 do
+        for y = 3,7 do
+            tiles[y][x] = Tile(x, y, TILE_ID_GROUND, nil, 53, 104)
+        end
+    end
+
+    -- flag
+    local pole1 = GameObject {
+        texture = 'flags',
+        x = (width - 2) * TILE_SIZE,
+        y = 4 * TILE_SIZE,
+        width = 16,
+        height = 16,
+        frame = 1,
+        collidable = true,
+        solid = false }
+    table.insert(objects, pole1)
+
+    local pole2 = GameObject {
+        texture = 'flags',
+        x = (width - 2) * TILE_SIZE,
+        y = 5 * TILE_SIZE,
+        width = 16,
+        height = 16,
+        frame = 10,
+        collidable = true,
+        solid = false }
+    table.insert(objects, pole2)
+
+    local pole3 = GameObject {
+        texture = 'flags',
+        x = (width - 2) * TILE_SIZE,
+        y = 6 * TILE_SIZE,
+        width = 16,
+        height = 16,
+        frame = 19,
+        collidable = true,
+        solid = false }
+    table.insert(objects, pole3)
+
+    table.insert(objects, GameObject {
+        texture = 'flags',
+        x = (width - 2) * TILE_SIZE + 8,
+        y = 4 * TILE_SIZE + 8,
+        width = 16,
+        height = 16,
+        frame = 25,
+        collidable = false }
+        )
+
     -- table of xy coords to put jump blocks
     local jb = {{6,2}, {7,2}, {15,5}}
     for i, xy in ipairs(jb) do

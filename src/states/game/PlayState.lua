@@ -10,7 +10,7 @@ PlayState = Class{__includes = BaseState}
 function PlayState:init()
     self.camX = 0
     self.camY = 0
-    self.level = LevelMaker.generate(50, 10)
+    self.level = LevelMaker.generate(52, 10)
     self.tileMap = self.level.tileMap
     self.background = 1 --lc math.random(3)
     self.backgroundX = 0

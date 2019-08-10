@@ -1,7 +1,7 @@
 Final Project for Game Development
 Modification of Mario
 
-This was actually fun. Challenging, but very rewarding to see the end result. Not a complete game, but a couple of cool features.
+This was actually lots of fun. It was challenging, and very rewarding to see the end result. This is not a complete game, but I did add a couple of cool features.
 
 First, the level is predetermined, and designed to present the player with strategic choices. All the platforms and obstacles are in set locations. Bigger chasms, higher obstacles. The coins and the snails are still random however.
 
